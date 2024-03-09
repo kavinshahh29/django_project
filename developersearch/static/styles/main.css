@@ -1,0 +1,39 @@
+h1{
+  color:red;
+
+}
+
+p{
+  color:blue;
+
+}
+
+
+
+
+/* Assuming your image has a class of "logo" */
+.logo {
+  width: 100px; /* Adjust the width as needed */
+  height: auto; /* This maintains the aspect ratio */
+  display: block; /* Ensures proper spacing around the image */
+  margin: 0 auto; /* Centers the image horizontally */
+}
+
+/* Styling for the h1 element containing the text "Logo" */
+h1 {
+  text-align: center; /* Centers the text horizontally */
+}
+
+/* Styling for the link "Add Project" */
+a {
+  display: block; /* Ensures proper spacing around the link */
+  text-align: center; /* Centers the link text horizontally */
+  margin-top: 20px; /* Adjust the margin as needed for spacing */
+  text-decoration: none; /* Removes underline from the link */
+  color: blue; /* Sets the link color */
+}
+
+/* Styling for the hover effect on the link */
+a:hover {
+  color: darkblue; /* Changes the color on hover */
+}
