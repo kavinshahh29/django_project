@@ -21,7 +21,7 @@ The Developer Search Web Application is a platform designed to facilitate collab
 - Users can search for other developers based on their usernames.
 - Search functionality provides suggestions as users type.
 
-### Post CRUD Operations
+### Post Project Operations
 - Developers can create, read, update, and delete their posts.
 - Posts may contain text, images, and multimedia content.
 
