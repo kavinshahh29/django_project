@@ -9,7 +9,6 @@
           <form class="form" method="POST" action=""  enctype="multipart/form-data">
             {% csrf_token %}
             {% for fieldname in form %}
-            <!-- Input:Text -->
               <div class="form__field">
                   <label for="formInput#text">{{fieldname.label}}</label>
                   {{fieldname}}

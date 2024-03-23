@@ -46,14 +46,26 @@
         <ul class="header__menu">
           <li class="header__menuItem"><a href="{% url 'userprofile' %}">Profiles</a></li>
           <li class="header__menuItem"><a href="{% url 'projects' %}" >Projects</a></li>
+
+
+          {% if request.user.is_authenticated %}
           <li class="header__menuItem"><a href="">Inbox</a></li>
           <li class="header__menuItem"><a href="{%  url 'create-project' %}">Add Project</a></li>
-          <li class="header__menuItem"><a href="" class="btn btn--sub">Login/Sign Up</a></li>
+            <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
+         {% else %}
+            <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
+            {% endif %}
         </ul>
       </nav>
     </div>
   </header>
-    
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 </body>
 </html>
 

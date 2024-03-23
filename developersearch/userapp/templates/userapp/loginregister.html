@@ -1,0 +1,25 @@
+{% include 'navbar.html' %}
+
+
+
+{% if page == 'register' %}
+<h1>Register User</h1>
+<form action="{% url 'registeruser' %}" method="POST">
+    {% csrf_token %}
+{{form.as_p }}
+
+<input type="submit">
+    </form>
+ <p>Already have an account ? <a href="{% url 'login' %}">Signin</a></p>
+{% else %}
+<form action="{% url 'login' %}" method="POST" >{% csrf_token %}
+
+    <input type="text" name="username" placeholder="Enter Your UserName">
+    <input type="password" name="password" placeholder="Enter Your Password">
+
+    <input type="submit" value="Login">
+
+    <p>Dont have an account ? <a href="{% url 'registeruser' %}">SignUp</a></p>
+{% endif %}
+</form>
+
