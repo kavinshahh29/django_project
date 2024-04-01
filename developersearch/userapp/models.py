@@ -3,8 +3,7 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save,post_delete
-
+from django.db.models.signals import post_save, post_delete
 
 class profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
@@ -23,7 +22,7 @@ class profile(models.Model):
 
 
     def __str__(self):
-        return str(self.user.username)
+        return str(self.user)
  
 
 
@@ -47,6 +46,19 @@ def profiledelete(sender,instance,**kwargs):
 
 
 
+def updateprofile(sender,instance,created,**kwargs):
+    profile=instance
+    user=profile.user
+    if created==False:
+        user.first_name=profile.name
+        user.username=profile.username
+        user.email=profile.email
+        user.save()
+
+
+
+
+
 def profileCreates(sender,instance,created,**kwargs):
     if created:
         user=instance
@@ -59,5 +71,8 @@ def profileCreates(sender,instance,created,**kwargs):
 
 post_save.connect(profileCreates,sender=User)
 post_delete.connect(profiledelete,sender=profile)
+post_save.connect(updateprofile,sender=profile)
+
+
 
 

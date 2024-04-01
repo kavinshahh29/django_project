@@ -1,0 +1,12 @@
+{% include 'navbar.html' %}
+
+
+
+<h1>Edit Account</h1>
+
+
+<form method="POST" action="{% url 'editprofile' %}"  enctype="multipart/form-data">
+    {% csrf_token %}
+    {{profileform.as_p}}
+    <input type="submit" value="Submit">
+</form>

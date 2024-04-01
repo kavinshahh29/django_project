@@ -1,6 +1,6 @@
-{% extends 'main.html' %}
+{% include 'navbar.html' %}
 
-{% block content %}
+
 
 <form method="post" action="">
      {% csrf_token %}
@@ -20,4 +20,3 @@
 
 </form>
 
-{% endblock %}

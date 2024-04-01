@@ -17,13 +17,17 @@ def projectdisplay(request,pk):
 
 @login_required(login_url="login")
 def CreateProject(request):
+    profile=request.user.profile
     form = ProjectForm()
     if request.method=='POST':
       print(request.POST)
       form = ProjectForm(request.POST,request.FILES)
       if form.is_valid():
 
-          form.save()
+          project=form.save(commit=False)
+          project.projectowner=profile
+          project.save()
+
           return redirect('projects')
 
     context={'form':form}

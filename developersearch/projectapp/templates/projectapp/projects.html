@@ -3,39 +3,11 @@
 {% load static %}
 <html lang="en">
 <head>
-  
-
-
-
     <meta charset="UTF-8">
        <link rel="stylesheet" type="text/css"  href='{% static "styles/main.css" %}'>
     
 </head>
 <body>
-
-  <table>
-      {% for project in form %}
-    <tr>
-
-
-         <td> {{project.title}}</td>
-        <td> {{project.description}}</td>
-        <td> {{project.reacts}}</td>
-
-        <td>{{project.ratio}}</td>
-        <td><a href="{% url 'projectd' project.id %}">View</a></td>
-
-        <td><a href="{% url 'updateproject' project.id %}">Update</a></td>
-
-        <td><a href="{% url 'deleteproject' project.id %}">Delete</a></td>
-        <br>
-
-    </tr>
-
-    {% endfor %}
-
-</table>
-
     <section class="projectsList">
       <div class="container">
         <div class="grid grid--three">
@@ -48,7 +20,6 @@
                 <div class="card__body">
                   <h3 class="project__title">{{project.title}}</h3>
                   <p><a class="project__author" href="{% url 'projectd' project.id %}"></a></p>
-                  <p><a class="project__author" href="{% url 'profilevisit' project.projectowner.id %}">{{project.projectowner}}</a></p>
                   <p class="project--rating">
                     <span style="font-weight: bold;">Positive View {{project.ratio}} </span> {{project.reacts}}Reaction {{project.reacts |pluralize:"s" }}
                   </p>
@@ -88,12 +59,5 @@
       </ul>
     </div>
   </main>
-
-
- 
-
-
-
-
 </body>
 </html>

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from . models import profile
-from .forms import CustomForm
+from .forms import CustomForm, ProfileEditform, Skillform
 from django.contrib import messages
 def userprofile(request):
     allprofiles=profile.objects.all()
@@ -73,7 +73,7 @@ def registeruser(request):
             user.save()
             messages.success(request," User account created ")
             login(request, user)
-            return redirect('userprofile')
+            return redirect('editprofile')
         else:
             messages.error(request,"An unwanted error occured")
 
@@ -82,3 +82,44 @@ def registeruser(request):
 
 
 
+
+
+@login_required(login_url='login')
+def ownprofile(request):
+    profile=request.user.profile
+    skillset = profile.skills_set.all
+    projectset = profile.manageproject_set.all
+    context={'profile':profile,'skillset':skillset,'projectset':projectset}
+
+    return render(request,'userapp/ownprofile.html',context)
+
+@login_required(login_url='login')
+def editprofile(request):
+    profile=request.user.profile
+    profileform=ProfileEditform(instance=profile)
+    if request.method=='POST':
+        form=ProfileEditform(request.POST,request.FILES,instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('ownprofile')
+
+
+    context={'profileform':profileform}
+    return render(request,'userapp/profile_edit.html',context)
+
+
+
+@login_required(login_url='login')
+def addSkill(request):
+    profile=request.user.profile
+    form=Skillform()
+    if request.method=='POST':
+        form=Skillform(request.POST)
+        if form.is_valid():
+            skill=form.save(commit=False)
+            skill.owner=profile
+            skill.save()
+            return redirect('ownprofile')
+
+    context={'form':form}
+    return render(request,'userapp/skilledit.html',context)
