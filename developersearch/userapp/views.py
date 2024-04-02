@@ -1,14 +1,19 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
-from . models import profile
+from .models import profile, Skills
 from .forms import CustomForm, ProfileEditform, Skillform
 from django.contrib import messages
 def userprofile(request):
+
+
+
     allprofiles=profile.objects.all()
-    return render(request,'userapp/userprofile.html',{ 'profiles':allprofiles})
+
+    return render(request,'userapp/userprofile.html',{'profiles':allprofiles})
 
 
 
@@ -123,3 +128,17 @@ def addSkill(request):
 
     context={'form':form}
     return render(request,'userapp/skilledit.html',context)
+
+
+
+
+@login_required(login_url='login')
+def searchdeveloper(request):
+    searchquery = ''
+    if request.GET.get('query'):
+        searchquery = request.GET.get('query')
+        skillsquery = Skills.objects.filter(name__icontains=searchquery)
+        allprofiles = profile.objects.distinct().filter(
+            Q(username__icontains=searchquery) | Q(skills__in=skillsquery)
+        )
+        return render(request, 'userapp/userprofilesearch.html', {'profiles': allprofiles})
