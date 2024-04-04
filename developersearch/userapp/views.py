@@ -4,17 +4,13 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
-from .models import profile, Skills
-from .forms import CustomForm, ProfileEditform, Skillform
+from .models import profile, Skills, Message
+from .forms import CustomForm, ProfileEditform, Skillform,Msgform
 from django.contrib import messages
 def userprofile(request):
-
-
-
     allprofiles=profile.objects.all()
 
-    return render(request,'userapp/userprofile.html',{'profiles':allprofiles})
-
+    return render(request,  'userapp/userprofile.html',{'profiles':allprofiles})
 
 
 @login_required(login_url="login")
@@ -23,6 +19,7 @@ def profilevisit(request,pk):
     skillset=userProfile.skills_set.all
     projectset=userProfile.manageproject_set.all
     return render(request,'userapp/profilevisit.html',{'userProfile':userProfile,'skillset':skillset,'projectset':projectset})
+
 
 
 
@@ -131,7 +128,6 @@ def addSkill(request):
 
 
 
-
 @login_required(login_url='login')
 def searchdeveloper(request):
     searchquery = ''
@@ -139,6 +135,52 @@ def searchdeveloper(request):
         searchquery = request.GET.get('query')
         skillsquery = Skills.objects.filter(name__icontains=searchquery)
         allprofiles = profile.objects.distinct().filter(
-            Q(username__icontains=searchquery) | Q(skills__in=skillsquery)
+            Q(name__icontains=searchquery) | Q(skills__in=skillsquery)
         )
         return render(request, 'userapp/userprofilesearch.html', {'profiles': allprofiles})
+    else:
+        allprofiles = profile.objects.all()
+        return render(request, 'userapp/userprofile.html', {'profiles': allprofiles})
+
+
+
+@login_required(login_url='login')
+def msg(request):
+    user_profile = request.user.profile
+    unread=Message.objects.filter(Q(recipient=user_profile,read=False))
+    allmessages = Message.objects.filter(Q(recipient=user_profile))
+
+    return render(request, 'userapp/inbox.html', {'allmessages': allmessages,'unread':unread})
+
+
+@login_required(login_url='login')
+def viewmsg(request, pk):
+
+
+
+    msg = Message.objects.get(id=pk)
+    if  msg.read==False:
+        msg.read = True
+        msg.save()
+
+    return render(request, 'userapp/message.html', {'msg': msg})
+
+
+@login_required(login_url='login')
+def sendmsg(request,pk):
+    form=Msgform()
+    recipient=profile.objects.get(id=pk)
+
+    sender=request.user.profile
+
+    if request.method=='POST':
+        form=Msgform(request.POST)
+        if form.is_valid():
+            msg=form.save(commit=False)
+            msg.sender=sender
+            msg.recipient=recipient
+            msg.save()
+            messages.success(request, "Message successfully delivered")
+            return redirect('profilevisit',pk=recipient.id)
+
+    return render(request,'userapp/message_form.html',{'recipient':recipient,'form':form})

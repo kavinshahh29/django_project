@@ -1,7 +1,7 @@
 {% include 'navbar.html' %}
 
 
-<h1>Hello Everyone </h1>
+<h1 style="text-align: center;">Hello Everyone </h1>
 
 
 
@@ -14,7 +14,7 @@
               <img class="avatar avatar--xl" src="{{ userProfile.Profile_img.url }}" />
               <h2 class="dev__name">{{userProfile.name}}</h2>
               <p class="dev__title">{{userProfile.Bio}}</p>
-<!--              <p class="dev__location">Based in Florida, USA</p>-->
+
                <ul class="dev__social">
                             {% if userProfile.Github_link %}
                             <li>
@@ -35,7 +35,7 @@
                             </li>
                             {% endif %}
                         </ul>
-                        <a href="#" class="btn btn--sub btn--lg">Send Message </a>
+                        <a href="{% url 'sendmsg' userProfile.id %}" class="btn btn--sub btn--lg">Send Message </a>
             </div>
           </div>
         </div>

@@ -5,22 +5,19 @@ from .models import ManageProject
 from django.contrib.auth.decorators import login_required
 def projectdisplay(request,pk):
    context = ManageProject.objects.filter(id=pk).first()
-   print(context)
-   print(context.description)
+
    if context is None:
         # Handle case where object with given PK does not exist
       return HttpResponse("Object not found", status=404)
    return render(request,'projectapp/single_project.html',{'ff':context})
 
-# def single_project(request):
-#     return render(request,'projectapp/single_project.html')
 
 @login_required(login_url="login")
 def CreateProject(request):
     profile=request.user.profile
     form = ProjectForm()
     if request.method=='POST':
-      print(request.POST)
+      # print(request.POST)
       form = ProjectForm(request.POST,request.FILES)
       if form.is_valid():
 

@@ -3,7 +3,7 @@ from django.forms import ModelForm
 
 from django.contrib.auth.models import User
 
-from userapp.models import profile, Skills
+from userapp.models import profile, Skills, Message
 
 
 class CustomForm(UserCreationForm):    # inheriting UserCreationForm
@@ -26,7 +26,12 @@ class ProfileEditform(ModelForm):
 class Skillform(ModelForm):
     class Meta:
         model=Skills
-        fields=['name','desc']
+        fields=['name']
 
 
+
+class Msgform(ModelForm):
+    class Meta:
+        model=Message
+        fields=['subject','body']
 

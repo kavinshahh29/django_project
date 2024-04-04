@@ -1,0 +1,22 @@
+
+{% include 'navbar.html' %}
+<!-- Main Section -->
+<main class="inbox my-xl">
+  <div class="content-box">
+    <h3 class="inbox__title">New Messages(<span>{{ unread.count}}</span>)</h3>
+    <ul class="messages">
+      {% for msg in allmessages %}
+      <li class="message message--unread">
+        <a href="{% url 'viewmsg' msg.id %}">
+          <span class="message__author">{{ msg.sender }}</span>
+          <span class="message__subject">{{ msg.subject }}</span>
+          <span class="message__date">{{ msg.create }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</main>
+</body>
+
+</html>
