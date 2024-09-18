@@ -5,10 +5,6 @@ The Developer Search Web Application is a platform designed to facilitate collab
 
 ## Features
 
-### Messaging System
-- Users can send and receive messages securely.
-- Messages are accessible only to the sender and recipient.
-
 ### Project Posting
 - Developers can create and post projects they are working on.
 - Projects include details like title, description, and tags.
