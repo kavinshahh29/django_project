@@ -1,7 +1,7 @@
 # Developer Search Web Application
 
 ## Description
-The Developer Search Web Application is a platform designed to facilitate collaboration among developers, enabling them to share projects, communicate, and explore profiles of other users. Built using Django, this application provides a range of features including a messaging system, project posting, project viewing, user search based on usernames, post CRUD operations, viewing other users' profiles, and CRUD operations on the user's own profile.
+The Developer Search Web Application is a platform designed to facilitate collaboration among developers, enabling them to share projects, communicate, and explore profiles of other users. Built using Django, this application provides a range of features including  project posting, project viewing, user search based on usernames, post CRUD operations, viewing other users' profiles, and CRUD operations on the user's own profile.
 
 ## Features
 
